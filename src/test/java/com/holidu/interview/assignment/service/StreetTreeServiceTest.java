@@ -43,7 +43,7 @@ public class StreetTreeServiceTest {
         when(objectMapper.readValue(any(URL.class), any(TypeReference.class))).thenReturn(new ArrayList<>());
         String expectedUrl = BASE_EXPECTED_URL +
                 "?$where=x_sp%20>%202.0%20AND%20x_sp%20<%208.0%20AND%20y_sp%20>%2010.0%20AND%20y_sp%20<%2016.0&$limit=1000&$offset=0";
-        streetTreeService.getTreesCount(5, 13, 2);
+        streetTreeService.getTreesCount(5, 13, 0.6);
         verify(objectMapper).readValue(eq(new URL(expectedUrl)), any(TypeReference.class));
     }
 
@@ -62,7 +62,7 @@ public class StreetTreeServiceTest {
         when(objectMapper.readValue(eq(new URL(firstPageUrl)), any(TypeReference.class))).thenReturn(results);
         when(objectMapper.readValue(eq(new URL(secondPageUrl)), any(TypeReference.class))).thenReturn(new ArrayList<>());
 
-        streetTreeService.getTreesCount(5, 13, 2);
+        streetTreeService.getTreesCount(5, 13, 0.6);
 
         verify(objectMapper).readValue(eq(new URL(firstPageUrl)), any(TypeReference.class));
         verify(objectMapper).readValue(eq(new URL(secondPageUrl)), any(TypeReference.class));
@@ -86,7 +86,7 @@ public class StreetTreeServiceTest {
         expectedResult.put("second", 1L);
         expectedResult.put("<without name>", 1L);
 
-        Map<String, Long> actualResult = streetTreeService.getTreesCount(10, 5, 4);
+        Map<String, Long> actualResult = streetTreeService.getTreesCount(10, 5, 1.22);
         assertThat(actualResult, is(expectedResult));
     }
 }

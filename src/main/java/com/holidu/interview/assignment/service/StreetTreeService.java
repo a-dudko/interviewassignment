@@ -26,6 +26,7 @@ public class StreetTreeService {
     private final static String LIMIT_AND_OFFSET_PARAMS = "&$limit=" + LIMIT + "&$offset=%d";
     private static final String ABSENT_NAME = "<without name>";
     private static final double PRECISION = 0.000001;
+    private static final double METER_TO_FEET_RATIO = 3.28084;
 
     private ObjectMapper objectMapper;
 
@@ -33,12 +34,17 @@ public class StreetTreeService {
         this.objectMapper = objectMapper;
     }
 
-    public Map<String, Long> getTreesCount(double x, double y, double radius) {
-        String urlWithParams = BASE_URL + String.format(URL_PARAMS, x - radius - 1, x + radius + 1, y - radius - 1, y + radius + 1)
+    public Map<String, Long> getTreesCount(double x, double y, double radiusInMeters) {
+        double radiusInFeet = radiusInMeters * METER_TO_FEET_RATIO;
+        double minX = x - radiusInFeet - 1;
+        double maxX = x + radiusInFeet + 1;
+        double minY = y - radiusInFeet - 1;
+        double maxY = y + radiusInFeet + 1;
+        String urlWithParams = BASE_URL + String.format(URL_PARAMS, minX, maxX, minY, maxY)
                 .replace(" ", "%20")
                 .replace(",", ".");
 
-        return countTreesInArea(findAllTrees(urlWithParams), x, y, radius);
+        return countTreesInArea(findAllTrees(urlWithParams), x, y, radiusInFeet);
     }
 
     private List<StreetTree> findAllTrees(String url) {
