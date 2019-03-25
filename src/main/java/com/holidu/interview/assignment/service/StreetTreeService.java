@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
 @Service
 public class StreetTreeService {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(StreetTreeService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StreetTreeService.class);
 
-    private final static String BASE_URL = "https://data.cityofnewyork.us/resource/nwxe-4ae8.json";
-    private final static String URL_PARAMS = "?$where=x_sp > %.1f AND x_sp < %.1f AND y_sp > %.1f AND y_sp < %.1f";
-    private final static int LIMIT = 1000;
-    private final static String LIMIT_AND_OFFSET_PARAMS = "&$limit=" + LIMIT + "&$offset=%d";
+    private static final String BASE_URL = "https://data.cityofnewyork.us/resource/nwxe-4ae8.json";
+    private static final String URL_PARAMS = "?$where=x_sp > %.1f AND x_sp < %.1f AND y_sp > %.1f AND y_sp < %.1f";
+    private static final int LIMIT = 1000;
+    private static final String LIMIT_AND_OFFSET_PARAMS = "&$limit=" + LIMIT + "&$offset=%d";
     private static final String ABSENT_NAME = "<without name>";
     private static final double PRECISION = 0.000001;
     private static final double METER_TO_FEET_RATIO = 3.28084;
